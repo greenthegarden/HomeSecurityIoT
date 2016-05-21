@@ -1,5 +1,5 @@
-#ifndef SENSORLIGHTIOTMODULE_MQTTCONFIG_H_
-#define SENSORLIGHTIOTMODULE_MQTTCONFIG_H_
+#ifndef HOMESECURITYIOT_MQTTCONFIG_H_
+#define HOMESECURITYIOT_MQTTCONFIG_H_
 
 
 #include <PubSubClient.h>
@@ -34,13 +34,13 @@ PGM_P const STATUS_TOPICS[]     PROGMEM = { CONNECTED_STATUS,    // idx = 0
                                             UPTIME_STATUS,       // idx = 2
                                             MEMORY_STATUS,       // idx = 3
                                             TIME_STATUS,         // idx = 4
-                                            SENSOR_STATUS,       // idx = 5
+                                            LED_STATUS,       // idx = 5
                                            };
 
 
 // Control topics
 
-const char LED_CONTROL[]        PROGMEM = "homesecurity/control/led";
+const char SENSOR_CONTROL[]     PROGMEM = "homesecurity/control/led";
 
 PGM_P const CONTROL_TOPICS[]    PROGMEM = { SENSOR_CONTROL,      // idx = 0
                                           };
@@ -111,9 +111,13 @@ void publish_connected()
 
 void publish_ip_address()
 {
+  const byte IP_ADDRESS_BUFFER_SIZE = 16; // "255.255.255.255\0"
+  static char ipString[IP_ADDRESS_BUFFER_SIZE] = "";
+  IPAddress ip = Ethernet.localIP();
+  sprintf(ipString, "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
   progBuffer[0] = '\0';
   strcpy_P(progBuffer, (char*)pgm_read_word(&(STATUS_TOPICS[1])));
-  mqttClient.publish(progBuffer, "192.168.1.90");
+  mqttClient.publish(progBuffer, ipString);
 }
 
 void publish_uptime()
@@ -126,4 +130,4 @@ void publish_uptime()
 }
 
 
-#endif   /* SENSORLIGHTIOTMODULE_MQTTCONFIG_H_ */
+#endif   /* HOMESECURITYIOT_MQTTCONFIG_H_ */

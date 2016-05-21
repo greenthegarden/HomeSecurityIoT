@@ -1,5 +1,5 @@
-#ifndef SENSORLIGHTIOTMODULE_CONFIG_H_
-#define SENSORLIGHTIOTMODULE_CONFIG_H_
+#ifndef HOMESECURITYIOT_CONFIG_H_
+#define HOMESECURITYIOT_CONFIG_H_
 
 
 #include "debug.h"
@@ -38,5 +38,5 @@ void no_network_behaviour() {
 }
 
 
-#endif   /* SENSORLIGHTIOTMODULE_CONFIG_H_ */
+#endif   /* HOMESECURITYIOT_CONFIG_H_ */
 

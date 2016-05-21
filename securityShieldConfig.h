@@ -29,7 +29,7 @@ const byte NORMAL_STATE = 1;
 const byte SENSOR_TRIGGERED = 2;
 const byte TAMPERED = 3;
 
-unsigned long sensorReadPreviousMillis       = 0UL;
+unsigned long sensorReadPreviousMillis   = 0UL;
 
 const unsigned long SENSOR_READ_INTERVAL = 1000UL;           // interval at which to take measurement (milliseconds)
 
