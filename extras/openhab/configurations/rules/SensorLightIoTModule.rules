@@ -1,0 +1,88 @@
+import org.openhab.core.library.types.*
+//import org.openhab.core.library.items.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.*
+
+//var java.util.concurrent.locks.ReentrantLock lock = new java.util.concurrent.locks.ReentrantLock()
+
+rule "Startup"
+	when
+		System started
+	then
+		sendCommand(Master, OFF)
+		sendCommand(LightRequest, OFF)
+		postUpdate(LightColour, 3)	// light colour white
+		sendCommand(Led_Off, ON)
+		sendCommand(Green, OFF)
+		sendCommand(Red, OFF)
+		sendCommand(Blue, OFF)
+		sendCommand(White, OFF)
+end
+
+rule "Master Off"
+	when
+		Item Master received command OFF
+	then
+		// switch of both manual and request, however, leave auto
+		if (Manual.state == ON)
+			sendCommand(Manual, OFF)
+		if (Auto.state == ON)
+			sendCommand(LightRequest, OFF)
+end
+
+rule "Master ON"
+	when
+		Item Master received command ON
+	then
+		if (Auto.state == ON)
+			sendCommand(LightRequest, ON)
+end
+
+rule "PIR"
+	when
+		Item PIR received command
+	then
+		if (PIR.state == ON)
+			sendCommand(Auto, ON)
+		else
+			sendCommand(Auto, OFF)
+end
+
+rule "Manual or Auto"
+	when
+		Item Manual received command or
+		Item Auto received command
+	then
+		if ( (Manual.state == ON) || (Auto.state == ON) ) {
+			sendCommand(LightRequest, ON)			
+		} else {
+			sendCommand(LightRequest, OFF)
+		}
+end
+
+/**
+ * This rule demonstrates how a NumberItem can be used to easily control the local sound system.
+ * A selection widget in the UI provides easy access for this
+ */
+rule "Select Colour"
+	when
+		Item LightColour received command or
+		Item LightRequest received command
+	then
+		if (LightRequest.state == ON) {
+//		switch(receivedCommand) {
+//			case 0 : sendCommand(Led_Off, ON)
+//			case 1 : sendCommand(Green, ON)
+//			case 2 : sendCommand(Red, ON)
+//			case 3 : sendCommand(Blue, ON)
+//			case 4 : sendCommand(White, ON)
+//		}
+			if (LightColour.state == 0) sendCommand(Green, ON)
+			else if (LightColour.state == 1) sendCommand(Red, ON)
+			else if (LightColour.state == 2) sendCommand(Blue, ON)
+			else if (LightColour.state == 3) sendCommand(White, ON)
+		} else {
+			sendCommand(Led_Off, ON)
+		}		
+end
+

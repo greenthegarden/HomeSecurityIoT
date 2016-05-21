@@ -1,0 +1,18 @@
+Group       FrontPorch
+
+Switch      Master       "Master"     <power>     (FrontPorch)
+
+Number      LightColour  "Light Colour"
+Switch      Led_Off      "Off"					{mqtt=">[airology:porchlight/control/led:command:ON:OFF]"}
+Switch      Green        "Green"                  {mqtt=">[airology:porchlight/control/led:command:ON:GREEN], >[airology:porchlight/control/led:command:OFF:OFF]"}
+Switch      Red        "Red"                  {mqtt=">[airology:porchlight/control/led:command:ON:RED], >[airology:porchlight/control/led:command:OFF:OFF]"}
+Switch      Blue        "Blue"                  {mqtt=">[airology:porchlight/control/led:command:ON:BLUE], >[airology:porchlight/control/led:command:OFF:OFF]"}
+Switch      White        "White"                  {mqtt=">[airology:porchlight/control/led:command:ON:WHITE], >[airology:porchlight/control/led:command:OFF:OFF]"}
+
+Switch      Manual       "Light"               
+Switch     Auto         "Auto"
+Switch     LightRequest        "Request"
+
+Number   Temperature   "Temperature [%.1f °C]"    {mqtt="<[airology:porchlight/status/temperature:state:default]"}
+Switch   PIR           "Detection"            {mqtt="<[airology:porchlight/status/pir:state:default]"}
+//porchlight/status/colour

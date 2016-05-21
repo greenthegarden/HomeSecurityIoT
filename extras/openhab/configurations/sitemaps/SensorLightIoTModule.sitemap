@@ -1,0 +1,18 @@
+sitemap SensorLightIoTModule label="Sensor Light IoT Module"
+{
+	Frame {
+		Text label="Front Porch" {
+//			Switch item=Manual
+			Switch item=Master
+			Switch item=Manual visibility=[Master!=OFF]
+			Switch item=PIR
+//			Switch item=LightRequest
+			Switch item=LightColour label="Light Colour" mappings=[0="Green", 1="Red", 2="Blue", 3="White"] visibility=[Master!=OFF]
+//			Switch item=Green
+//			Switch item=Red
+//			Switch item=Blue
+//			Switch item=White
+			Text item=Temperature 
+		}
+	}
+}
